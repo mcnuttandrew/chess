@@ -115,7 +115,7 @@ class SlidingPiece < Piece
         index += 1
       end
     end
-#    p total_moves
+   p total_moves
     total_moves
   end
 

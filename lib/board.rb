@@ -44,8 +44,19 @@
      class_name.new(pos, self, color)
    end
    
-   def check(color)
-     
+   def in_check?(color)
+     king = @rows.flatten.select do |item|
+       (!item.nil?) && (item.class == King) && (item.color == color)
+     end[0]
+     enemies = @rows.flatten.select do |item|
+       !item.nil? && (item.color != color)
+     end
+     enemies.each do |enemy|
+       if enemy.get_moves.include? king.pos
+         return true
+       end
+     end
+     return false
    end
    
    def render
