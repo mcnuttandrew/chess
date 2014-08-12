@@ -1,26 +1,22 @@
 
 
  class Board
+   attr_accessor :captured
    def initialize
      @rows = Array.new(8) { Array.new(8) { nil } }
+     @captured = []
      place_pieces
    end
    
    def move(start, end_pos)#assume input in prply formatted move [x,y]
      piece = self[start]
-     p piece.get_moves
      if piece && piece.get_moves.include?(end_pos)
-       # piece.get_moves.each do |something|
-#          p something
-#        end
-       p "ping"
-              
+       p "valid move"              
        piece.move!(end_pos)
-              
-
-       # p piece.pos
      end
    end
+   
+   
 
    def place_pieces
      pieces = []
@@ -47,7 +43,11 @@
    def place_piece(class_name, pos, color)
      class_name.new(pos, self, color)
    end
-
+   
+   def check(color)
+     
+   end
+   
    def render
      # system 'clear'
      @rows.each do |row|

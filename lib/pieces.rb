@@ -7,29 +7,40 @@ class Piece
   end
   
   def check_valid?(pos)
-    unless @board[pos].nil?
-      # puts "That space is taken"
-      return false 
-    end
     unless (0..7).include?(pos[0]) && (0..7).include?(pos[1])
-      # puts "That space is out of bounds"
       return false 
     end
+#    @board[pos].class unless @board[pos].nil?#.color
+    if @board[pos].nil? || (@board[pos].color != color)
+      return true 
+    end
+    
     true
   end
   
   def move! new_pos
-    return unless check_valid?(new_pos)
-    @board[@pos] = nil
-    @pos = new_pos
-    @board[new_pos] = self
-    if self.is_a? Pawn
-      self.mark_moved
-    end
-
-    # if @board[pos] && @board[pos].color != color
- #      capture!(@board[pos])
- #    end
+     return unless check_valid?(new_pos)
+     if @board[new_pos] && (@board[new_pos].color != color)
+       capture!(@board[new_pos])
+     end
+     @board[@pos] = nil
+     @pos = new_pos
+     @board[new_pos] = self
+     if self.is_a? Pawn
+       self.mark_moved
+     end
+  end
+  
+  def capture! piece
+    p "captured!"
+    piece.delete!
+#    p @board.captured
+    @board.captured << piece
+#    p @board.captured
+  end
+  
+  def delete! 
+    @pos = nil
   end
 end
 
@@ -100,15 +111,11 @@ class SlidingPiece < Piece
         x_component = pos[0] + (dir[0] * index)
         y_component = pos[1] + (dir[1] * index)
         possible_space = [x_component, y_component]
-        if check_valid?(possible_space)
-          total_moves << possible_space
-        else
-          break
-        end
+        check_valid?(possible_space) ? (total_moves << possible_space) : break
         index += 1
       end
     end
-    p total_moves
+#    p total_moves
     total_moves
   end
 
