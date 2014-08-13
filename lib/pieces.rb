@@ -7,36 +7,48 @@ class Piece
   end
   
   def check_valid?(pos)
-    unless (0..7).include?(pos[0]) && (0..7).include?(pos[1])
+    #cehck on board
+    unless (0..7).include?(pos[0]) && (0..7).include?(pos[1]) 
       return false 
     end
-#    @board[pos].class unless @board[pos].nil?#.color
+    #check if moving into check
+    if move_into_check?(pos)
+      return false
+    end
+    #check if space is empty or capturable
     if @board[pos].nil? || (@board[pos].color != color)
       return true 
     end
-    
     true
   end
   
+
+  
   def move! new_pos
-     return unless check_valid?(new_pos)
+     #return unless check_valid?(new_pos)
      if @board[new_pos] && (@board[new_pos].color != color)
        capture!(@board[new_pos])
      end
      @board[@pos] = nil
      @pos = new_pos
      @board[new_pos] = self
-     if self.is_a? Pawn
-       self.mark_moved
-     end
+     self.mark_moved if self.is_a?(Pawn)
   end
   
   def capture! piece
     p "captured!"
     piece.delete!
-#    p @board.captured
     @board.captured << piece
-#    p @board.captured
+  end
+  
+  def move_into_check?(new_pos) 
+    new_board = @board.dup
+    #get piece at this location from duped
+    clone_piece = new_board[@pos]
+    clone_piece.move!(new_pos)
+    #move piece
+    #check
+    new_board.in_check?(@color)
   end
   
   def delete! 
@@ -52,6 +64,7 @@ class SteppingPiece < Piece
       possible_space = [pos[0] + dir[0], pos[1] + dir[1]]
       total_moves << possible_space if check_valid?(possible_space)
     end
+    p total_moves
     total_moves
   end
 end
@@ -106,17 +119,14 @@ class SlidingPiece < Piece
     dirs = move_dirs
     total_moves = []
     dirs.each do |dir|
-      index = 1
-      loop do
+      (1..7).each do |index|
         x_component = pos[0] + (dir[0] * index)
         y_component = pos[1] + (dir[1] * index)
-        possible_space = [x_component, y_component]
-        check_valid?(possible_space) ? (total_moves << possible_space) : break
-        index += 1
+        total_moves << [x_component, y_component]
+
       end
     end
-   p total_moves
-    total_moves
+    total_moves.select!{|el| check_valid?(el)}
   end
 
   def move_dirs
@@ -154,7 +164,7 @@ class Queen < SlidingPiece
   end
 
   def move_dirs
-    HORIZ.concat(DIAG)
+    HORIZ + DIAG
   end
 end
  
