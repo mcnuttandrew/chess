@@ -1,8 +1,14 @@
-require_relative 'lib/board.rb'
-require_relative 'lib/pieces.rb'
+# encoding: UTF-8
 
-g = Board.new
-g.render
+require_relative 'lib/game.rb'
+
+g = Game.new
+g.run
+
+# require_relative 'lib/pieces.rb'
+#
+# g = Board.new
+# g.render
 
 
 #
@@ -42,15 +48,15 @@ g.render
 # g.move([4,6],[5,7])
 # g.render
 # puts g.captured
-
-
-g.move([4,1],[4,3] )
-g.move([4,6],[4,4] )
-g.move([5,0], [2, 3] )
-g.move([3,0], [7, 4] )
-g.render
-g.move([3, 7], [4,6] )
-g.move([7, 4], [5,6] )
-g.render
-p g.checkmate?(:black)
+#
+#
+# g.move([4,1],[4,3] )
+# g.move([4,6],[4,4] )
+# g.move([5,0], [2, 3] )
+# g.move([3,0], [7, 4] )
+# g.render
+# g.move([3, 7], [4,6] )
+# g.move([7, 4], [5,6] )
+# g.render
+# p g.checkmate?(:black)
 

@@ -1,3 +1,5 @@
+# encoding: UTF-8
+
 class Board
   attr_accessor :captured
   def initialize(prepoped = true)
@@ -11,10 +13,7 @@ class Board
     if piece 
       moves_col = piece.get_moves
       if moves_col.include?(end_pos)
-        p self[start].class
-#        p moves_col
         moves_col.select!{|el| piece.check_valid?(el)}
-        p moves_col
         if moves_col.include?(end_pos) 
           moves_col
           piece.move!(end_pos)
@@ -29,13 +28,6 @@ class Board
     pieces_list.map do |el|
       duped_board.place_piece(el.class, el.pos.dup, el.color, duped_board)
     end
-    
-   # pieces_list.each { |piece| duped_board[piece.pos] = piece }
-    
-    # puts "now showing, dupped board"
- #    duped_board.render
- #    puts "now not showing, dupped board"
-    
     duped_board
   end
 
@@ -80,8 +72,10 @@ class Board
   end
  
   def render
-    @rows.each do |row|
-      p row.map { |el| el.nil? ? "_" : el.name }.join(" ")
+    puts " "
+    p ([nil, nil] + ("A".."H").to_a).join(" ")
+    @rows.each_with_index do |row, index|
+      p ([(index + 1).to_s ] + row.map { |el| el.nil? ? "_" : el.name }).join(" ")
     end
   end
 

@@ -1,10 +1,13 @@
+# encoding: UTF-8
+
 class Piece
-  attr_reader :pos, :board, :color, :name
+  attr_reader :pos, :board, :color
   def initialize(pos, board, color)
     @pos = pos
     @board = board
     @color = color
   end
+
   
   def check_valid?(pos)
     #check if moving into check
@@ -64,9 +67,12 @@ end
 
 class Pawn < SteppingPiece
   def initialize(*args)
-    @name = "P"
     @moved = false
     super
+  end
+  
+  def name
+    @color == :white ? "♙" : "♟"
   end
   
   def move_dirs
@@ -87,20 +93,20 @@ end
 
 
 class King < SteppingPiece
-  def initialize(*args)
-    @name = "K"
-    super
+  
+  def name
+    @color == :white ? "♔" : "♚"
   end
-
+  
   def move_dirs
     [[0, 1], [0, -1], [1, 0],[-1, 0], [1, 1], [-1, -1], [-1, 1], [1, -1]]
   end
 end
 
 class Knight < SteppingPiece
-  def initialize(*args)
-    @name = "H"
-    super
+  
+  def name
+    @color == :white ? "♘" : "♞"
   end
 
   def move_dirs
@@ -120,9 +126,7 @@ class SlidingPiece < Piece
       (1..7).each do |index|
         x_component = @pos[0] + (dir[0] * index)
         y_component = @pos[1] + (dir[1] * index)
-#        p [x_component, y_component]
         new_position = [x_component, y_component]
-        #p new_position
         if (0..7).include?(x_component) && (0..7).include?(y_component) 
           if !@board[new_position].nil? && @board[new_position].color != @color
             total_moves << [x_component, y_component]
@@ -140,33 +144,35 @@ class SlidingPiece < Piece
   end
 end
 
+7372 
+
 
 class Rook < SlidingPiece
-  def initialize(*args)
-    @name = "R"
-    super
-  end
 
+  def name
+    @color == :white ? "♖" : "♜"
+  end
+  
   def move_dirs
     HORIZ
   end
 end
 
 class Bishop < SlidingPiece
-  def initialize(*args)
-    @name = "B"
-    super
+  
+  def name
+    @color == :white ? "♗" : "♝"
   end
-
+  
   def move_dirs
     DIAG
   end
 end
 
 class Queen < SlidingPiece
-  def initialize(*args)
-    @name = "Q"
-    super
+
+  def name
+    @color == :white ? "♕" : "♛"
   end
 
   def move_dirs
