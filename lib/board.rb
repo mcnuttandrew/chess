@@ -99,6 +99,5 @@ class Board
     pieces.all? do |piece| 
       piece.get_moves.select{|el| piece.check_valid?(el)}.empty?  
     end
-#    no_moves_left? ? true : false 
   end
 end
