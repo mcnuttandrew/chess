@@ -8,7 +8,8 @@ class Board
     place_pieces if (prepoped == true)
   end
  
-  def move(start, end_pos)#assume input in prply formatted move [x,y]
+  def move(start, end_pos)
+    #assume input in prply formatted move [x,y]
     piece = self[start]
     if piece 
       moves_col = piece.get_moves
@@ -74,8 +75,8 @@ class Board
   def render
     puts " "
     p ([nil, nil] + ("A".."H").to_a).join(" ")
-    @rows.each_with_index do |row, index|
-      p ([(index + 1).to_s ] + row.map { |el| el.nil? ? "_" : el.name }).join(" ")
+    @rows.reverse.each_with_index do |row, index|
+      p ([(8 - index).to_s ] + row.map { |el| el.nil? ? "_" : el.name }).join(" ")
     end
   end
 

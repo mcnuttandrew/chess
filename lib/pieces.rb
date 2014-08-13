@@ -71,8 +71,40 @@ class Pawn < SteppingPiece
     super
   end
   
+  def get_moves
+    dirs = move_dirs
+    dirs += attack_moves unless attack_moves.empty? 
+    total_moves = []
+    dirs.each do |dir|
+      possible_space = [pos[0] + dir[0], pos[1] + dir[1]]
+      if (0..7).include?(possible_space[0]) && (0..7).include?(possible_space[1]) 
+        total_moves << possible_space 
+      end
+    end
+    total_moves
+  end
+  
+  def attack_moves
+    #find position
+    extra_moves = []
+    attack_dirs.each do |dir|
+      x = @pos[0] + dir[0]
+      y = @pos[1] + dir[1]
+      next unless (0..7).include? (x)
+      next unless (0..7).include? (y)
+      next if @board[[x,y]].nil?
+      p [x,y]
+      extra_moves << dir if @board[[x,y]].color != @color 
+    end
+    extra_moves
+  end
+  
   def name
-    @color == :white ? "♙" : "♟"
+    @color == :white ? "♟" : "♙"
+  end
+  
+  def attack_dirs
+    @color == :white ? [[1,1], [-1,1]] : [[-1,-1], [1,-1]]
   end
   
   def move_dirs
@@ -95,7 +127,7 @@ end
 class King < SteppingPiece
   
   def name
-    @color == :white ? "♔" : "♚"
+    @color == :white ? "♚" : "♔"
   end
   
   def move_dirs
@@ -106,7 +138,7 @@ end
 class Knight < SteppingPiece
   
   def name
-    @color == :white ? "♘" : "♞"
+    @color == :white ? "♞" : "♘"
   end
 
   def move_dirs
@@ -150,7 +182,7 @@ end
 class Rook < SlidingPiece
 
   def name
-    @color == :white ? "♖" : "♜"
+    @color == :white ? "♜" : "♖"
   end
   
   def move_dirs
@@ -161,7 +193,7 @@ end
 class Bishop < SlidingPiece
   
   def name
-    @color == :white ? "♗" : "♝"
+    @color == :white ? "♝" : "♗"
   end
   
   def move_dirs
@@ -172,7 +204,7 @@ end
 class Queen < SlidingPiece
 
   def name
-    @color == :white ? "♕" : "♛"
+    @color == :white ? "♛" : "♕"
   end
 
   def move_dirs
