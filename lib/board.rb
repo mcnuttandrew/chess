@@ -8,9 +8,16 @@ class Board
  
   def move(start, end_pos)#assume input in prply formatted move [x,y]
     piece = self[start]
-    if piece && piece.get_moves.include?(end_pos)
-      p "valid move"
-      piece.move!(end_pos)
+    if piece 
+      moves_col = piece.get_moves
+      if moves_col.include?(end_pos)
+        moves_col.select!{|el| piece.check_valid?(el)}
+
+        if moves_col.include?(end_pos) 
+          moves_col
+          piece.move!(end_pos)
+        end
+      end
     end
   end
  
@@ -47,21 +54,29 @@ class Board
   def place_piece(class_name, pos, color)
     class_name.new(pos, self, color)
   end
+  
+  def get_color(color)
+    @rows.flatten.compact.select { |item| (item.color == color) }
+    # puts @rows
+    # puts "PING"
+    # puts @rows.flatten.compact.select{|item| (item.color == some_color)}
+     # @rows.flatten.compact.select{|item| (item.color == some_color)}
+  end
  
-  def in_check?(color)
-    king = @rows.flatten.select do |item|
-      (!item.nil?) && (item.class == King) && (item.color == color)
-    end[0]
-    enemies = @rows.flatten.select do |item|
-      !item.nil? && (item.color != color)
-    end
+  def in_check?(some_color)
+    king = get_color(some_color).select{|el| el.is_a?(King)}[0]
+#    puts king
+    return false if king.nil?
+    opposite_color = [:black, :white] - [some_color]
+    enemies = get_color(opposite_color[0])
     enemies.each do |enemy|
       #decouple
-      if enemy.get_moves.include? king.pos
-        return true
-      end
+      #p enemy.pos
+       if enemy.get_moves.include? king.pos
+         return true
+       end
     end
-    return false
+    false
   end
  
   def render

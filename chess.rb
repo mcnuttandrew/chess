@@ -28,8 +28,12 @@ g.render
 g.move([0,1],[0,3])
 #
 g.move([0,0],[0,2])
+g.move([0,2],[4,2])
+g.move([4,2],[4,6])
 #
 # g.move([4,2],[4,6])
 # g.move([4,6],[4,2])
 g.render
+puts g.captured
+g.in_check?(:black)
 
