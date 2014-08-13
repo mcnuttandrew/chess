@@ -32,19 +32,14 @@ class Piece
   end
   
   def capture! piece
-    p piece.name
-    p "captured!"
     piece.delete!
     @board.captured << piece
   end
   
   def move_into_check?(new_pos) 
-     new_board = @board.dup
-    # #get piece at this location from duped
+     new_board = @board.dup(nil)
      clone_piece = new_board[@pos]
      clone_piece.move!(new_pos) unless clone_piece.nil?
-    # #move piece
-    # #check
      new_board.in_check?(@color)
   end
   
@@ -63,8 +58,6 @@ class SteppingPiece < Piece
         total_moves << possible_space 
       end
     end
-    
-    p total_moves
     total_moves
   end
 end
@@ -77,7 +70,12 @@ class Pawn < SteppingPiece
   end
   
   def move_dirs
-    @moved ? [[0,1]] : [[0,1], [0,2]]
+    #special case the colors
+    if @color == :white
+      @moved ? [[0,1]] : [[0,1], [0,2]]
+    else
+      @moved ? [[0,-1]] : [[0,-1], [0,-2]]
+    end
   end
   
   def mark_moved
@@ -120,9 +118,16 @@ class SlidingPiece < Piece
     total_moves = []
     dirs.each do |dir|
       (1..7).each do |index|
-        x_component = pos[0] + (dir[0] * index)
-        y_component = pos[1] + (dir[1] * index)
+        x_component = @pos[0] + (dir[0] * index)
+        y_component = @pos[1] + (dir[1] * index)
+#        p [x_component, y_component]
+        new_position = [x_component, y_component]
+        #p new_position
         if (0..7).include?(x_component) && (0..7).include?(y_component) 
+          if !@board[new_position].nil? && @board[new_position].color != @color
+            total_moves << [x_component, y_component]
+            break
+          end 
           total_moves << [x_component, y_component]
         end
       end

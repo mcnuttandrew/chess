@@ -24,16 +24,33 @@ g.render
 # puts board[[0,3]] != nil
 
 
+#
+# g.move([0,1],[0,3])
+# #
+# g.move([0,0],[0,2])
+# g.move([0,2],[4,2])
+# g.move([4,6],[4,4])
+# g.move([4,2],[4,4])
+#
+# g.render
+# g.move([5,7],[4,6])
+# #p g.in_check?(:black)
+# #g.move([5,7], [4,6])
+# #g.render
+# #p g.in_check?(:black)
+# g.render
+# g.move([4,6],[5,7])
+# g.render
+# puts g.captured
 
-g.move([0,1],[0,3])
-#
-g.move([0,0],[0,2])
-g.move([0,2],[4,2])
-g.move([4,2],[4,6])
-#
-# g.move([4,2],[4,6])
-# g.move([4,6],[4,2])
+
+g.move([4,1],[4,3] )
+g.move([4,6],[4,4] )
+g.move([5,0], [2, 3] )
+g.move([3,0], [7, 4] )
 g.render
-puts g.captured
-g.in_check?(:black)
+g.move([3, 7], [4,6] )
+g.move([7, 4], [5,6] )
+g.render
+p g.checkmate?(:black)
 
