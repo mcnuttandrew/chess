@@ -1,3 +1,5 @@
+#cd Desktop/w2d2/chess;ruby chess.rb
+
 require_relative 'board.rb'
 require_relative 'pieces.rb'
 
@@ -13,58 +15,68 @@ class Game
     "g" => 6,
     "h" => 7
   }
-  def initialize#(p1, p2)
+  
+  def initialize
     @board = Board.new
     @current = :white
-#    @white_player = p1
-#    @black_player = p2
   end
   
-
-  
   def run
-    until @board.checkmate?(@current)
-      @board.render
-      player_move = get_player_move
-      @board.move(player_move[0],player_move[1])
-      #raise errors or whatever
-      @current = (COLORS - [@current])[0]
+    until game_over?
+      begin
+        @board.render
+        player_move = get_player_move
+        move_executed = @board.move(player_move[0],player_move[1])
+        @current = (COLORS - [@current])[0]
+        raise "Your move was invalid" if !move_executed
+      rescue Exception => e
+        puts e.message
+        retry
+      end
     end
+    
+    @current = (COLORS - [@current])[0]
+    @board.render
+    if @board.stalemate?
+      puts "Game ends in stalemate, eh"
+    else
+      puts "#{@current} player won!"
+    end
+  end
+  
+  def game_over?
+    if @board.checkmate?(:white)||@board.checkmate?(:black)|| @board.stalemate?
+      return true
+    end
+    false
   end
   
   def get_player_move
-    puts "#{@current} player please enter move (e2,e4)"
-    #filter
     move = [nil,nil]
-    input = gets.chomp
-    unless valid_input?(input)
-      puts "that isn't a valid input. Please enter something like e2,e3"
-      get_player_move
+    begin
+      puts "#{@current} player please enter move (e2,e4)"
+      input = gets.chomp
+      raise "That isn't a valid input." unless valid_input?(input)
+      view_captured if ((input.downcase) == "captured")
+      # save if ((input.downcase) == "save")
+      # load if ((input.downcase) == "load")
+      input.split(",").each_with_index do |el, index|
+        place = el.split("")
+        place[0] = BOARD_LETTERS[place[0].downcase]
+        place[1] = place[1].to_i - 1
+        move[index] = place
+      end 
+      raise "There's no piece there." if no_piece?(move[0])
+      raise "That piece isn't yours." if !same_color?(move[0])
+    rescue Exception => e
+       puts e.message
+      retry
     end
-    view_captured if ((input.downcase) == "captured")
-      
-    input.split(",").each_with_index do |el, index|
-      place = el.split("")
-      place[0] = BOARD_LETTERS[place[0].downcase]
-      place[1] = place[1].to_i - 1
-      move[index] = place
-    end
-    if !no_piece?(move[0])
-      move
-    else
-      puts "there's no piece there"
-      get_player_move
-    end
-    if same_color?(move[0])
-      move
-    else
-      puts "that piece isn't yours"
-      get_player_move
-    end
+    move
   end  
   
   def valid_input?(input)
-    input =~ /[A-Ha-h][1-8],[A-Ha-h][1-8]|\Acaptured\z/ ? true : false
+    input =~ /[A-Ha-h][1-8],[A-Ha-h][1-8]|\Acaptured\z|\Asave\z|\Aload\z/ ? true : false
   end
   
   def same_color?(place)
@@ -88,19 +100,32 @@ class Game
       "Captured Black Pieces"
       capt.each do |piece| 
         p piece.name if piece.color == :black
-      end
-      
+      end      
     end
-    
-    get_player_move
   end
+  
+  # def save
+  #   objects_to_save = [@board]
+  #   @board.rows.flatten.compact.each do |piece|
+  #     objects_to_save << piece
+  #   end
+  #   savable = objects_to_save.to_yaml
+  #   File.open('save_game', 'w') do |f|
+  #     f.puts savable
+  #   end
+  #   puts "Game saved"
+  # end
+  #
+  # def load
+  #   data = YAML::parse(File.read('save_game'))
+  #   @board = data.shift
+  #   data.each do |piece|
+  #     place_piece(piece)
+  #   end
+  #   puts "game loaded"
+  # end
+    
+    
 end
-  
-  
-class Player
-  
-  
-  
-  
-end
+
 

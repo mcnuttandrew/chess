@@ -1,0 +1,277 @@
+---
+- &70300989771240 !ruby/object:Board
+  rows:
+  - - &70300989770920 !ruby/object:Rook
+      pos:
+      - 0
+      - 0
+      board: *70300989771240
+      color: :white
+    - &70300989770860 !ruby/object:Knight
+      pos:
+      - 1
+      - 0
+      board: *70300989771240
+      color: :white
+    - &70300989770800 !ruby/object:Bishop
+      pos:
+      - 2
+      - 0
+      board: *70300989771240
+      color: :white
+    - &70300989770740 !ruby/object:Queen
+      pos:
+      - 3
+      - 0
+      board: *70300989771240
+      color: :white
+    - &70300989770680 !ruby/object:King
+      pos:
+      - 4
+      - 0
+      board: *70300989771240
+      color: :white
+    - &70300989770620 !ruby/object:Bishop
+      pos:
+      - 5
+      - 0
+      board: *70300989771240
+      color: :white
+    - &70300989770560 !ruby/object:Knight
+      pos:
+      - 6
+      - 0
+      board: *70300989771240
+      color: :white
+    - &70300989770500 !ruby/object:Rook
+      pos:
+      - 7
+      - 0
+      board: *70300989771240
+      color: :white
+  - - &70300989769880 !ruby/object:Pawn
+      moved: false
+      pos:
+      - 0
+      - 1
+      board: *70300989771240
+      color: :white
+    - &70300989769800 !ruby/object:Pawn
+      moved: false
+      pos:
+      - 1
+      - 1
+      board: *70300989771240
+      color: :white
+    - &70300989769720 !ruby/object:Pawn
+      moved: false
+      pos:
+      - 2
+      - 1
+      board: *70300989771240
+      color: :white
+    - &70300989769620 !ruby/object:Pawn
+      moved: false
+      pos:
+      - 3
+      - 1
+      board: *70300989771240
+      color: :white
+    - 
+    - &70300989609020 !ruby/object:Pawn
+      moved: false
+      pos:
+      - 5
+      - 1
+      board: *70300989771240
+      color: :white
+    - &70300989599880 !ruby/object:Pawn
+      moved: false
+      pos:
+      - 6
+      - 1
+      board: *70300989771240
+      color: :white
+    - &70300989599240 !ruby/object:Pawn
+      moved: false
+      pos:
+      - 7
+      - 1
+      board: *70300989771240
+      color: :white
+  - - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+  - - 
+    - 
+    - 
+    - 
+    - &70300989769540 !ruby/object:Pawn
+      moved: true
+      pos:
+      - 4
+      - 3
+      board: *70300989771240
+      color: :white
+    - 
+    - 
+    - 
+  - - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+  - - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+    - 
+  - - &70300989593100 !ruby/object:Pawn
+      moved: false
+      pos:
+      - 0
+      - 6
+      board: *70300989771240
+      color: :black
+    - &70300989592860 !ruby/object:Pawn
+      moved: false
+      pos:
+      - 1
+      - 6
+      board: *70300989771240
+      color: :black
+    - &70300989592600 !ruby/object:Pawn
+      moved: false
+      pos:
+      - 2
+      - 6
+      board: *70300989771240
+      color: :black
+    - &70300989592400 !ruby/object:Pawn
+      moved: false
+      pos:
+      - 3
+      - 6
+      board: *70300989771240
+      color: :black
+    - &70300989592240 !ruby/object:Pawn
+      moved: false
+      pos:
+      - 4
+      - 6
+      board: *70300989771240
+      color: :black
+    - &70300989592060 !ruby/object:Pawn
+      moved: false
+      pos:
+      - 5
+      - 6
+      board: *70300989771240
+      color: :black
+    - &70300989591880 !ruby/object:Pawn
+      moved: false
+      pos:
+      - 6
+      - 6
+      board: *70300989771240
+      color: :black
+    - &70300989591700 !ruby/object:Pawn
+      moved: false
+      pos:
+      - 7
+      - 6
+      board: *70300989771240
+      color: :black
+  - - &70300989770440 !ruby/object:Rook
+      pos:
+      - 0
+      - 7
+      board: *70300989771240
+      color: :black
+    - &70300989770380 !ruby/object:Knight
+      pos:
+      - 1
+      - 7
+      board: *70300989771240
+      color: :black
+    - &70300989770320 !ruby/object:Bishop
+      pos:
+      - 2
+      - 7
+      board: *70300989771240
+      color: :black
+    - &70300989770240 !ruby/object:Queen
+      pos:
+      - 3
+      - 7
+      board: *70300989771240
+      color: :black
+    - &70300989770180 !ruby/object:King
+      pos:
+      - 4
+      - 7
+      board: *70300989771240
+      color: :black
+    - &70300989770100 !ruby/object:Bishop
+      pos:
+      - 5
+      - 7
+      board: *70300989771240
+      color: :black
+    - &70300989770040 !ruby/object:Knight
+      pos:
+      - 6
+      - 7
+      board: *70300989771240
+      color: :black
+    - &70300989769980 !ruby/object:Rook
+      pos:
+      - 7
+      - 7
+      board: *70300989771240
+      color: :black
+  captured: []
+  stale_moves: 0
+- *70300989770920
+- *70300989770860
+- *70300989770800
+- *70300989770740
+- *70300989770680
+- *70300989770620
+- *70300989770560
+- *70300989770500
+- *70300989769880
+- *70300989769800
+- *70300989769720
+- *70300989769620
+- *70300989609020
+- *70300989599880
+- *70300989599240
+- *70300989769540
+- *70300989593100
+- *70300989592860
+- *70300989592600
+- *70300989592400
+- *70300989592240
+- *70300989592060
+- *70300989591880
+- *70300989591700
+- *70300989770440
+- *70300989770380
+- *70300989770320
+- *70300989770240
+- *70300989770180
+- *70300989770100
+- *70300989770040
+- *70300989769980

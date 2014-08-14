@@ -2,24 +2,37 @@
 
 class Board
   attr_accessor :captured
+  attr_reader :rows
   def initialize(prepoped = true)
     @rows = Array.new(8) { Array.new(8, nil) }
     @captured = []
+    @stale_moves = 0
     place_pieces if (prepoped == true)
   end
  
   def move(start, end_pos)
-    #assume input in prply formatted move [x,y]
+    num_captures = @captured.length
     piece = self[start]
     if piece 
       moves_col = piece.get_moves
       if moves_col.include?(end_pos)
         moves_col.select!{|el| piece.check_valid?(el)}
-        if moves_col.include?(end_pos) 
-          moves_col
-          piece.move!(end_pos)
-        end
+        piece.move!(end_pos) if moves_col.include?(end_pos) 
+        increment_stalemate(piece, num_captures)
+      else
+        false
       end
+    else
+      false
+    end
+    true
+  end
+  
+  def increment_stalemate(piece, num_captures)
+    if piece.class == Pawn || @captured.length > num_captures
+      @stale_moves = 0
+    else 
+      @stale_moves += 1
     end
   end
  
@@ -73,7 +86,6 @@ class Board
   end
  
   def render
-    puts " "
     p ([nil, nil] + ("A".."H").to_a).join(" ")
     @rows.reverse.each_with_index do |row, index|
       p ([(8 - index).to_s ] + row.map { |el| el.nil? ? "_" : el.name }).join(" ")
@@ -92,7 +104,18 @@ class Board
     return false unless in_check?(color)
     pieces = get_color(color)
     pieces.all? do |piece| 
-      piece.get_moves.select{|el| piece.check_valid?(el)}.empty?  
+      piece.get_moves.select{|el| piece.check_valid?(el)}.empty?
     end
+  end
+  
+  def stalemate?
+    [:white,:black].each do |color|
+      return false if in_check?(color)
+      pieces = get_color(color)
+      pieces.all? do |piece| 
+        piece.get_moves.select{|el| piece.check_valid?(el)}.empty?  
+      end
+    end
+    return true if @stale_moves >= 50
   end
 end
