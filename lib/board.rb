@@ -3,6 +3,7 @@
 class Board
   attr_accessor :captured
   attr_reader :rows
+  
   def initialize(prepoped = true)
     @rows = Array.new(8) { Array.new(8, nil) }
     @captured = []
