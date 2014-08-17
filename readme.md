@@ -7,6 +7,4 @@ Current status notes:
 
 + does not have En Pasant or castling implemented.
 
-+ should be refactored to allow for interface with an AI.
-
-+ render needs to be updated so that it doesn't look so comically ugly. 
++ currently has bug in which if a player makes an invalid move than their turn is skipped. 
