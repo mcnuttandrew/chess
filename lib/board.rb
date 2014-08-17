@@ -85,13 +85,6 @@ class Board
     false
   end
  
-  def render
-    p ([nil, nil] + ("A".."H").to_a).join(" ")
-    @rows.reverse.each_with_index do |row, index|
-      p ([(8 - index).to_s ] + row.map { |el| el.nil? ? "_" : el.name }).join(" ")
-    end
-  end
-
   def [](pos)
     @rows[pos[1]][pos[0]]
   end
@@ -118,4 +111,13 @@ class Board
     end
     return true if @stale_moves >= 50
   end
+  
+  def game_over?
+    if checkmate?(:white)||checkmate?(:black)|| stalemate?
+      return true
+    end
+    false
+  end
+  
+  
 end

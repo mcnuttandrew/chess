@@ -5,7 +5,7 @@ require_relative 'piece.rb'
 class Rook < SlidingPiece
 
   def name
-    @color == :white ? "♜" : "♖"
+    @color == :white ? "R".red : "R".black
   end
   
   def move_dirs

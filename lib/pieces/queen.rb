@@ -5,7 +5,7 @@ require_relative 'piece.rb'
 class Queen < SlidingPiece
 
   def name
-    @color == :white ? "♛" : "♕"
+    @color == :white ? "Q".red : "Q".black
   end
 
   def move_dirs

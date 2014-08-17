@@ -5,7 +5,7 @@ require_relative 'piece.rb'
 class King < SteppingPiece
   
   def name
-    @color == :white ? "♚" : "♔"
+    @color == :white ? "K".red : "K".black
   end
   
   def move_dirs
